@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinanceFlow — Dashboard de Finanças Pessoais</title>
+  <meta name="description" content="Acompanhe suas receitas, despesas e metas financeiras com um belo dashboard.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="app-header__brand">
+      <div class="app-header__logo">💸</div>
+      <div>
+        <div class="app-header__title">FinanceFlow</div>
+        <div class="app-header__subtitle">Finanças Pessoais</div>
+      </div>
+    </div>
+    <div class="app-header__actions">
+      <button class="btn btn--primary" onclick="openModal()">+ Nova Transação</button>
+      <button class="btn btn--icon" onclick="toggleTheme()" title="Alternar tema">
+        <span id="themeIcon">☀️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- NAV TABS -->
+  <nav class="nav-tabs">
+    <button class="nav-tab nav-tab--active" data-tab="dashboard">📊 <span>Visão Geral</span></button>
+    <button class="nav-tab" data-tab="transactions">📋 <span>Transações</span></button>
+    <button class="nav-tab" data-tab="goals">🎯 <span>Metas</span></button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- ===== DASHBOARD TAB ===== -->
+    <section id="panel-dashboard" class="tab-panel tab-panel--active">
+      <!-- Summary Cards -->
+      <div class="summary-grid">
+        <div class="summary-card summary-card--balance">
+          <div class="summary-card__label">📊 Saldo Total</div>
+          <div class="summary-card__value" id="balanceValue">$0.00</div>
+        </div>
+        <div class="summary-card summary-card--income">
+          <div class="summary-card__label">📈 Total de Receitas</div>
+          <div class="summary-card__value" id="incomeValue">$0.00</div>
+        </div>
+        <div class="summary-card summary-card--expense">
+          <div class="summary-card__label">📉 Total de Despesas</div>
+          <div class="summary-card__value" id="expenseValue">$0.00</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-card__title">🍩 Despesas por Categoria</div>
+          <div class="chart-wrapper"><canvas id="pieChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card__title">📈 Visão Mensal</div>
+          <div class="chart-wrapper"><canvas id="lineChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions Preview -->
+      <div class="transactions-header">
+        <h2 class="transactions-header__title">Transações Recentes</h2>
+        <button class="btn btn--ghost" onclick="switchTab('transactions')">Ver Todas →</button>
+      </div>
+      <div id="transactionList" class="transaction-list"></div>
+    </section>
+
+    <!-- ===== TRANSACTIONS TAB ===== -->
+    <section id="panel-transactions" class="tab-panel">
+      <div class="transactions-header">
+        <h2 class="transactions-header__title">Todas as Transações</h2>
+        <div class="filter-bar">
+          <select class="form-select" id="filterType">
+            <option value="all">Todos os Tipos</option>
+            <option value="income">Receita</option>
+            <option value="expense">Despesa</option>
+          </select>
+          <select class="form-select" id="filterCategory">
+            <option value="all">Todas as Categorias</option>
+            <optgroup label="Despesa">
+              <option value="Food">🍔 Alimentação</option>
+              <option value="Transport">🚗 Transporte</option>
+              <option value="Housing">🏠 Moradia</option>
+              <option value="Health">💊 Saúde</option>
+              <option value="Leisure">🎮 Lazer</option>
+              <option value="Education">📚 Educação</option>
+              <option value="Others">📦 Outros</option>
+            </optgroup>
+            <optgroup label="Receita">
+              <option value="Salary">💰 Salário</option>
+              <option value="Freelance">💻 Freelance</option>
+              <option value="Investments">📈 Investimentos</option>
+            </optgroup>
+          </select>
+          <button class="btn btn--primary" onclick="openModal()">+ Adicionar</button>
+        </div>
+      </div>
+      <div id="transactionList2" class="transaction-list"></div>
+    </section>
+
+    <!-- ===== GOALS TAB ===== -->
+    <section id="panel-goals" class="tab-panel">
+      <div class="transactions-header">
+        <h2 class="transactions-header__title">Metas de Gastos Mensais</h2>
+      </div>
+
+      <div id="goalsList" class="goals-grid" style="margin-bottom: var(--space-8);"></div>
+
+      <h3 style="font-size: var(--text-md); font-weight: var(--weight-semibold); margin-bottom: var(--space-4);">➕ Nova / Alterar Meta</h3>
+      <form id="goalForm" class="goal-form-inline">
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select class="form-select" id="goalCategory" required>
+            <option value="Food">🍔 Alimentação</option>
+            <option value="Transport">🚗 Transporte</option>
+            <option value="Housing">🏠 Moradia</option>
+            <option value="Health">💊 Saúde</option>
+            <option value="Leisure">🎮 Lazer</option>
+            <option value="Education">📚 Educação</option>
+            <option value="Others">📦 Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Limite Mensal (R$)</label>
+          <input type="number" class="form-input" id="goalLimit" min="1" step="0.01" placeholder="500.00" required>
+        </div>
+        <button type="submit" class="btn btn--primary">Salvar Meta</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- ADD TRANSACTION MODAL -->
+  <div class="modal-overlay" id="transactionModal">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Nova Transação</h2>
+        <button class="btn btn--icon" onclick="closeModal()">✕</button>
+      </div>
+      <form id="transactionForm">
+        <!-- Type Toggle -->
+        <div class="form-radio-group">
+          <div class="form-radio form-radio--expense">
+            <input type="radio" name="txType" value="expense" id="txType-expense" checked>
+            <label for="txType-expense">💸 Despesa</label>
+          </div>
+          <div class="form-radio form-radio--income">
+            <input type="radio" name="txType" value="income" id="txType-income">
+            <label for="txType-income">💰 Receita</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="txDescription">Descrição</label>
+          <input type="text" class="form-input" id="txDescription" name="txDescription" placeholder="ex. Compras no mercado" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="txAmount">Valor (R$)</label>
+            <input type="number" class="form-input" id="txAmount" name="txAmount" min="0.01" step="0.01" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="txCategory">Categoria</label>
+            <select class="form-select" id="txCategory" name="txCategory" required></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="txDate">Data</label>
+          <input type="date" class="form-input" id="txDate" name="txDate" required>
+        </div>
+
+        <button type="submit" class="btn btn--primary" style="width:100%; margin-top: var(--space-3); justify-content: center;">Adicionar Transação</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
