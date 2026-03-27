@@ -4,6 +4,8 @@ Bem-vindo(a) ao **FinanceFlow**, um painel de controle simples, moderno e comple
 
 O FinanceFlow conta com gráficos atrativos, cartões com resumos dinâmicos e suporte a Modo Escuro nativo. Toda a aplicação foi inteiramente localizada para **Português do Brasil (PT-BR)**.
 
+🔗 **Teste o projeto agora (Live Demo):** [https://lucasairess.github.io/FinanceFlow/](https://lucasairess.github.io/FinanceFlow/)
+
 ---
 
 ## 🚀 Funcionalidades Principais
