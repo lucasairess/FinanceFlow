@@ -1,6 +1,6 @@
-# 🎨 FinanceFlow — Design System
+# 🎨 finance-flow — Design System
 
-> Design System tokenizado baseado no dashboard FinanceFlow. Todos os tokens são variáveis CSS reutilizáveis.
+> Design System tokenizado baseado no dashboard finance-flow. Todos os tokens são variáveis CSS reutilizáveis.
 
 ---
 

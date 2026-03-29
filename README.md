@@ -1,10 +1,10 @@
-# FinanceFlow 💸
+# finance-flow 💸
 
-Bem-vindo(a) ao **FinanceFlow**, um painel de controle simples, moderno e completo para gerenciamento de finanças pessoais. Este projeto foi desenvolvido para ajudar você a acompanhar suas receitas, despesas e metas de gastos de maneira visual e intuitiva. 
+Bem-vindo(a) ao **finance-flow**, um painel de controle simples, moderno e completo para gerenciamento de finanças pessoais. Este projeto foi desenvolvido para ajudar você a acompanhar suas receitas, despesas e metas de gastos de maneira visual e intuitiva. 
 
-O FinanceFlow conta com gráficos atrativos, cartões com resumos dinâmicos e suporte a Modo Escuro nativo. Toda a aplicação foi inteiramente localizada para **Português do Brasil (PT-BR)**.
+O **finance-flow** conta com gráficos atrativos, cartões com resumos dinâmicos e suporte a Modo Escuro nativo. Toda a aplicação foi inteiramente localizada para **Português do Brasil (PT-BR)**.
 
-🔗 **Teste o projeto agora (Live Demo):** [https://lucasairess.github.io/FinanceFlow/](https://lucasairess.github.io/FinanceFlow/)
+🔗 **Teste o projeto agora (Live Demo):** [https://finance-flow-flame.vercel.app/](https://finance-flow-flame.vercel.app/)
 
 ---
 
@@ -34,7 +34,7 @@ Dado que o aplicativo não possui um back-end (tudo é executado apenas no naveg
 
 1. **Clone do repositório:**
    ```bash
-   git clone https://github.com/lucasairess/FinanceFlow.git
+   git clone https://github.com/lucasairess/finance-flow.git
    ```
 2. **Abra o arquivo local:**
    Basta ir à pasta clonada e abrir o arquivo `index.html` em qualquer navegador moderno. 
